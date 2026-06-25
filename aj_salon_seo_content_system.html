@@ -1,0 +1,341 @@
+
+<h2 class="sr-only">AJ Salon SEO Content System — interactive dashboard with blog outlines, content clusters, local SEO posts, and internal linking structure</h2>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.wrap{padding:1.5rem 0;max-width:700px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.5rem}
+.tab{padding:7px 14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary);transition:all .15s}
+.tab.active{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-primary);font-weight:500}
+.tab:hover:not(.active){background:var(--color-background-secondary)}
+.panel{display:none}.panel.active{display:block}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;margin-bottom:1rem}
+.card-title{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:.5rem}
+.kw-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:.5rem}
+.kw{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);font-size:11.5px;padding:3px 9px;color:var(--color-text-secondary)}
+.kw.primary{background:#E1F5EE;color:#085041;border-color:#9FE1CB}
+.kw.secondary{background:#EEEDFE;color:#3C3489;border-color:#CECBF6}
+.h1{font-size:15px;font-weight:500;color:var(--color-text-primary);padding:8px 0 4px}
+.h2{font-size:13.5px;font-weight:500;color:var(--color-text-secondary);padding:4px 0 2px;padding-left:14px}
+.h2::before{content:"H2 ·";font-size:11px;font-weight:400;margin-right:5px;opacity:.5}
+.h3{font-size:13px;color:var(--color-text-secondary);padding:2px 0;padding-left:28px;opacity:.8}
+.h3::before{content:"H3 ·";font-size:11px;margin-right:5px;opacity:.5}
+.divider{border:none;border-top:0.5px solid var(--color-border-tertiary);margin:12px 0}
+.label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-tertiary);margin-bottom:6px;margin-top:14px}
+.pillar-card{border-left:3px solid #1D9E75;padding-left:12px;margin-bottom:10px}
+.support-list{padding-left:14px;margin-top:4px}
+.support-list li{font-size:13px;color:var(--color-text-secondary);padding:2px 0;list-style:none}
+.support-list li::before{content:"→ ";color:#1D9E75}
+.link-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.link-row:last-child{border:none}
+.link-from{font-size:13px;color:var(--color-text-secondary);flex:1}
+.link-arrow{font-size:12px;color:var(--color-text-tertiary)}
+.link-to{font-size:13px;color:#185FA5;flex:1}
+.anchor{font-size:11.5px;color:var(--color-text-tertiary);background:var(--color-background-secondary);padding:2px 7px;border-radius:var(--border-radius-md)}
+.copy-btn{font-size:11px;padding:4px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:transparent;cursor:pointer;color:var(--color-text-secondary);margin-top:10px}
+.copy-btn:hover{background:var(--color-background-secondary)}
+.blog-text{font-size:13.5px;color:var(--color-text-secondary);line-height:1.75;margin-top:6px}
+.stats-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:1.25rem}
+.stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.85rem;text-align:center}
+.stat-n{font-size:22px;font-weight:500;color:var(--color-text-primary)}
+.stat-l{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.sel{width:100%;margin-bottom:1rem;padding:7px 10px;font-size:13px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary)}
+</style>
+
+<div class="wrap">
+<div class="stats-row">
+  <div class="stat"><div class="stat-n">5</div><div class="stat-l">Content clusters</div></div>
+  <div class="stat"><div class="stat-n">12</div><div class="stat-l">Blog outlines</div></div>
+  <div class="stat"><div class="stat-n">6</div><div class="stat-l">Local SEO posts</div></div>
+  <div class="stat"><div class="stat-n">30+</div><div class="stat-l">Target keywords</div></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="show('outlines',this)">Blog outlines</button>
+  <button class="tab" onclick="show('longform',this)">Long-form post</button>
+  <button class="tab" onclick="show('clusters',this)">Content clusters</button>
+  <button class="tab" onclick="show('local',this)">Local SEO</button>
+  <button class="tab" onclick="show('links',this)">Internal linking</button>
+</div>
+
+<!-- OUTLINES -->
+<div id="outlines" class="panel active">
+  <select class="sel" onchange="showOutline(this.value)">
+    <option value="haircut">Best haircut styles for women in Hyderabad</option>
+    <option value="bridal">Complete bridal makeup guide – Hyderabad weddings</option>
+    <option value="facial">Top facials for glowing skin in Hyderabad</option>
+    <option value="color">Hair coloring trends 2025 – Hyderabad salon guide</option>
+    <option value="groom">Groom makeup: why every groom needs it</option>
+  </select>
+  <div id="outline-content" class="card"></div>
+</div>
+
+<!-- LONG-FORM -->
+<div id="longform" class="panel">
+  <div class="card">
+    <div class="card-title">Sample long-form post (~1,400 words)</div>
+    <div class="kw-row">
+      <span class="kw primary">best salon in Hyderabad</span>
+      <span class="kw primary">bridal makeup Hyderabad</span>
+      <span class="kw secondary">AJ Salon</span>
+      <span class="kw secondary">wedding beauty Hyderabad</span>
+    </div>
+    <hr class="divider">
+    <div class="label">H1</div>
+    <div class="h1" style="font-size:16px">The Ultimate Bridal Makeup Guide for Hyderabad Brides — What to Expect at AJ Salon</div>
+    <div class="blog-text">
+      Getting married in Hyderabad is one of the most exciting things that can happen to you. The city is known for its grand celebrations, rich traditions, and breathtaking venues — from the lanes of Jubilee Hills to the heritage halls of Banjara Hills. And at the centre of it all is the bride. Her look sets the tone for the entire event.<br><br>
+      At AJ Salon, we have worked with hundreds of Hyderabad brides. We understand that every bride is different. Some want a bold, full-coverage glam look. Others prefer a natural, dewy finish that lets their skin breathe. Whatever your style, getting bridal makeup right requires the right products, the right technique, and most importantly — the right team.<br><br>
+      In this guide, we walk you through everything you need to know about bridal makeup in Hyderabad: what services to book, what questions to ask, and how AJ Salon prepares you for your big day.
+    </div>
+    <div class="label">H2 — What makes Hyderabad bridal makeup unique?</div>
+    <div class="blog-text">
+      Hyderabad weddings blend cultures beautifully. Telugu, Muslim, and Sikh weddings all have their own makeup requirements. A Telugu bride might want a traditional look with bold red lips and flowers in her hair. A Muslim bride may prefer soft, elegant foundation with defined eyes. At AJ Salon, our artists are trained across all of these styles, so you always get a look that matches your culture, your skin tone, and your outfit.
+    </div>
+    <div class="label">H2 — Our bridal makeup packages at AJ Salon</div>
+    <div class="blog-text">
+      We offer three carefully designed bridal packages. The Classic Bride package covers full face makeup, HD foundation, contouring, and setting spray for a look that lasts the entire ceremony. The Signature Bride package adds a pre-bridal facial and eyebrow shaping the day before your wedding. Our Premium Bride package is a full-day experience — from hair styling and draping to makeup and a post-event touch-up kit.<br><br>
+      All packages include a trial session where we test your full bridal look at least two weeks before the wedding. This gives us time to make adjustments based on your feedback.
+    </div>
+    <div class="label">H2 — Products we use for long-lasting results</div>
+    <div class="blog-text">
+      We only use professional-grade, skin-safe products — including MAC, Kryolan, and Charlotte Tilbury. For Hyderabad's warm and humid climate, we use extra-hold setting sprays and oil-control primers so your makeup stays fresh from the morning ceremony to the evening reception. We always do a skin patch test before your trial.
+    </div>
+    <div class="label">H2 — How to prepare for your bridal makeup session</div>
+    <div class="blog-text">
+      Start a skincare routine at least 30 days before your wedding. Drink plenty of water. Get a facial at AJ Salon 10–14 days before the event to improve your skin texture. Avoid waxing or threading within 48 hours of the event. Come for your appointment with a clean, moisturised face and bring any reference photos that inspire your look.
+    </div>
+    <div class="label">H2 — Why Hyderabad brides choose AJ Salon</div>
+    <div class="blog-text">
+      AJ Salon has served brides across Hyderabad for years. Our team of professional makeup artists understands the pressure that comes with a wedding day. We make sure you feel calm, comfortable, and completely confident. We are located conveniently in Hyderabad and offer flexible scheduling including early morning and weekend appointments to fit your wedding timeline.<br><br>
+      <strong>Book your bridal consultation at AJ Salon today.</strong> Slots fill up fast during wedding season, so we recommend booking at least 4–6 weeks in advance.
+    </div>
+    <button class="copy-btn" onclick="sendPrompt('Write the full 1,400-word blog post for AJ Salon on bridal makeup guide for Hyderabad brides, ready to publish')">Generate full publish-ready post ↗</button>
+  </div>
+</div>
+
+<!-- CLUSTERS -->
+<div id="clusters" class="panel">
+  <div class="card">
+    <div class="card-title">Content cluster strategy — pillar + supporting blogs</div>
+    <div class="label" style="margin-top:0">Pillar 1 — Hair services</div>
+    <div class="pillar-card">
+      <div style="font-size:13.5px;font-weight:500;color:var(--color-text-primary)">Best hair salon in Hyderabad — complete guide (Pillar page)</div>
+      <ul class="support-list">
+        <li>Best haircut styles for women in Hyderabad 2025</li>
+        <li>Hair spa vs deep conditioning: what does your hair need?</li>
+        <li>How to choose the right hair color for Indian skin tones</li>
+        <li>Keratin treatment at AJ Salon — is it worth it?</li>
+      </ul>
+    </div>
+    <div class="label">Pillar 2 — Bridal & special events</div>
+    <div class="pillar-card">
+      <div style="font-size:13.5px;font-weight:500;color:var(--color-text-primary)">Bridal makeup & grooming guide — Hyderabad weddings (Pillar page)</div>
+      <ul class="support-list">
+        <li>Complete bridal makeup checklist for Hyderabad brides</li>
+        <li>Groom makeup in Hyderabad — why it matters and what to expect</li>
+        <li>Pre-bridal skincare routine: 30-day plan before your wedding</li>
+        <li>Best bridal packages in Hyderabad — a comparison</li>
+      </ul>
+    </div>
+    <div class="label">Pillar 3 — Skincare & facials</div>
+    <div class="pillar-card">
+      <div style="font-size:13.5px;font-weight:500;color:var(--color-text-primary)">Facial & skincare services at AJ Salon Hyderabad (Pillar page)</div>
+      <ul class="support-list">
+        <li>Top 5 facials for oily skin in Hyderabad</li>
+        <li>Hydrating vs anti-aging facials: which one suits you?</li>
+        <li>How often should you get a facial in Hyderabad's climate?</li>
+      </ul>
+    </div>
+    <div class="label">Pillar 4 — Grooming for men</div>
+    <div class="pillar-card">
+      <div style="font-size:13.5px;font-weight:500;color:var(--color-text-primary)">Men's grooming at AJ Salon Hyderabad — full guide (Pillar page)</div>
+      <ul class="support-list">
+        <li>Best men's haircut styles in Hyderabad 2025</li>
+        <li>Groom grooming package — what's included at AJ Salon</li>
+        <li>Men's skincare: why facials are no longer just for women</li>
+      </ul>
+    </div>
+    <div class="label">Pillar 5 — Nail & body care</div>
+    <div class="pillar-card">
+      <div style="font-size:13.5px;font-weight:500;color:var(--color-text-primary)">Manicure & pedicure guide — AJ Salon Hyderabad (Pillar page)</div>
+      <ul class="support-list">
+        <li>Gel vs acrylic nails — which lasts longer in Hyderabad's heat?</li>
+        <li>Best nail art trends in Hyderabad 2025</li>
+        <li>How to care for your nails between salon visits</li>
+      </ul>
+    </div>
+    <button class="copy-btn" onclick="sendPrompt('Generate a content calendar for AJ Salon publishing 2 blog posts per week across all 5 content clusters for the next 3 months')">Build 3-month content calendar ↗</button>
+  </div>
+</div>
+
+<!-- LOCAL SEO -->
+<div id="local" class="panel">
+  <div class="card">
+    <div class="card-title">Local SEO blog posts — Hyderabad city targeting</div>
+    <div class="label" style="margin-top:0">Post 1</div>
+    <div class="h1">Best beauty salon in Banjara Hills, Hyderabad — AJ Salon review 2025</div>
+    <div class="kw-row"><span class="kw primary">beauty salon Banjara Hills</span><span class="kw primary">salon near me Hyderabad</span></div>
+    <hr class="divider">
+    <div class="label">Post 2</div>
+    <div class="h1">Top 5 bridal makeup artists in Jubilee Hills, Hyderabad</div>
+    <div class="kw-row"><span class="kw primary">bridal makeup Jubilee Hills</span><span class="kw secondary">makeup artist Hyderabad</span></div>
+    <hr class="divider">
+    <div class="label">Post 3</div>
+    <div class="h1">Where to get the best haircut in Madhapur, Hyderabad — 2025 guide</div>
+    <div class="kw-row"><span class="kw primary">haircut salon Madhapur</span><span class="kw secondary">best haircut Hyderabad</span></div>
+    <hr class="divider">
+    <div class="label">Post 4</div>
+    <div class="h1">Facial treatment near Kukatpally, Hyderabad — AJ Salon</div>
+    <div class="kw-row"><span class="kw primary">facial Kukatpally</span><span class="kw primary">skincare salon Hyderabad</span></div>
+    <hr class="divider">
+    <div class="label">Post 5</div>
+    <div class="h1">Affordable manicure and pedicure salons in Kondapur, Hyderabad</div>
+    <div class="kw-row"><span class="kw primary">manicure pedicure Kondapur</span><span class="kw secondary">nail salon Hyderabad</span></div>
+    <hr class="divider">
+    <div class="label">Post 6</div>
+    <div class="h1">Groom makeup services in HITEC City Hyderabad — complete guide</div>
+    <div class="kw-row"><span class="kw primary">groom makeup HITEC City</span><span class="kw secondary">wedding grooming Hyderabad</span></div>
+    <button class="copy-btn" onclick="sendPrompt('Write a full 1,300-word local SEO blog post for AJ Salon titled: Best beauty salon in Banjara Hills, Hyderabad — AJ Salon review 2025. Optimized for local search intent.')">Write the Banjara Hills post ↗</button>
+  </div>
+</div>
+
+<!-- INTERNAL LINKS -->
+<div id="links" class="panel">
+  <div class="card">
+    <div class="card-title">Internal linking structure — SEO hierarchy</div>
+    <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:12px">Pillar pages link to supporting blogs. Supporting blogs link back to the pillar and cross-link to related clusters.</div>
+    <div class="label" style="margin-top:0">Hair cluster</div>
+    <div class="link-row"><span class="link-from">Hair color trends 2025</span><span class="link-arrow">→</span><span class="link-to">Best hair salon Hyderabad (Pillar)</span><span class="anchor">anchor: "hair salon"</span></div>
+    <div class="link-row"><span class="link-from">Keratin treatment guide</span><span class="link-arrow">→</span><span class="link-to">Hair spa vs conditioning</span><span class="anchor">anchor: "hair spa"</span></div>
+    <div class="link-row"><span class="link-from">Best haircut styles (women)</span><span class="link-arrow">→</span><span class="link-to">Bridal makeup guide (Pillar)</span><span class="anchor">anchor: "bridal makeover"</span></div>
+    <div class="label">Bridal cluster</div>
+    <div class="link-row"><span class="link-from">Bridal makeup checklist</span><span class="link-arrow">→</span><span class="link-to">Pre-bridal skincare routine</span><span class="anchor">anchor: "skincare before wedding"</span></div>
+    <div class="link-row"><span class="link-from">Groom makeup Hyderabad</span><span class="link-arrow">→</span><span class="link-to">Best bridal packages Hyderabad</span><span class="anchor">anchor: "bridal packages"</span></div>
+    <div class="link-row"><span class="link-from">Local: Jubilee Hills post</span><span class="link-arrow">→</span><span class="link-to">Bridal makeup guide (Pillar)</span><span class="anchor">anchor: "bridal makeup"</span></div>
+    <div class="label">Skincare cluster</div>
+    <div class="link-row"><span class="link-from">Facial for oily skin</span><span class="link-arrow">→</span><span class="link-to">Facial services Pillar</span><span class="anchor">anchor: "facial Hyderabad"</span></div>
+    <div class="link-row"><span class="link-from">How often get a facial</span><span class="link-arrow">→</span><span class="link-to">Pre-bridal skincare routine</span><span class="anchor">anchor: "pre-bridal care"</span></div>
+    <div class="label">Local SEO → Pillar cross-links</div>
+    <div class="link-row"><span class="link-from">All local posts</span><span class="link-arrow">→</span><span class="link-to">Homepage: "AJ Salon Hyderabad"</span><span class="anchor">anchor: "AJ Salon"</span></div>
+    <div class="link-row"><span class="link-from">All local posts</span><span class="link-arrow">→</span><span class="link-to">Nearest matching Pillar page</span><span class="anchor">context anchor</span></div>
+    <button class="copy-btn" onclick="sendPrompt('Create a complete internal linking map for AJ Salon website in a table format showing: Source Page, Anchor Text, Destination Page, and SEO Purpose for all 30+ blog posts')">Generate full linking map ↗</button>
+  </div>
+</div>
+</div>
+
+<script>
+const outlines={
+  haircut:{
+    title:"Best haircut styles for women in Hyderabad",
+    kws:[["best women haircut Hyderabad","primary"],["salon near me Hyderabad","primary"],["trendy hair styles 2025","secondary"],["AJ Salon Hyderabad","secondary"]],
+    structure:[
+      {type:"h1",text:"Best haircut styles for women in Hyderabad 2025 — AJ Salon guide"},
+      {type:"h2",text:"Why getting the right haircut matters for Indian hair types"},
+      {type:"h3",text:"Understanding thick, wavy, and straight Indian hair"},
+      {type:"h3",text:"How humidity in Hyderabad affects your hair style"},
+      {type:"h2",text:"Top 7 women's haircut styles trending in Hyderabad this year"},
+      {type:"h3",text:"1. The modern bob — low maintenance, high style"},
+      {type:"h3",text:"2. Layered cuts for volume and movement"},
+      {type:"h3",text:"3. The blunt cut for thick hair"},
+      {type:"h2",text:"How to choose the right haircut for your face shape"},
+      {type:"h3",text:"Oval, round, square, and heart face shapes explained"},
+      {type:"h2",text:"What to expect at AJ Salon — your haircut experience"},
+      {type:"h3",text:"Consultation, cut, blowdry, and finish"},
+      {type:"h2",text:"Book your haircut at AJ Salon in Hyderabad today"},
+    ]
+  },
+  bridal:{
+    title:"Complete bridal makeup guide – Hyderabad weddings",
+    kws:[["bridal makeup Hyderabad","primary"],["bridal salon Hyderabad","primary"],["wedding makeup artist","secondary"],["AJ Salon bridal","secondary"]],
+    structure:[
+      {type:"h1",text:"The complete bridal makeup guide for Hyderabad weddings — AJ Salon"},
+      {type:"h2",text:"What makes Hyderabad bridal makeup unique?"},
+      {type:"h3",text:"Telugu, Muslim, and Sikh bridal traditions"},
+      {type:"h3",text:"Choosing a look that matches your outfit and venue"},
+      {type:"h2",text:"AJ Salon bridal packages — what's included"},
+      {type:"h3",text:"Classic, signature, and premium bride packages"},
+      {type:"h3",text:"Bridal trial session — why it matters"},
+      {type:"h2",text:"Products we use for long-lasting bridal looks"},
+      {type:"h3",text:"Professional brands that work in Hyderabad's climate"},
+      {type:"h2",text:"How to prepare your skin before the big day"},
+      {type:"h3",text:"30-day pre-bridal skincare routine"},
+      {type:"h2",text:"Book your bridal consultation at AJ Salon Hyderabad"},
+    ]
+  },
+  facial:{
+    title:"Top facials for glowing skin in Hyderabad",
+    kws:[["facial Hyderabad","primary"],["best facial salon Hyderabad","primary"],["glowing skin facial","secondary"],["skincare treatment Hyderabad","secondary"]],
+    structure:[
+      {type:"h1",text:"Top facials for glowing skin in Hyderabad — AJ Salon guide 2025"},
+      {type:"h2",text:"Why regular facials are important in Hyderabad's climate"},
+      {type:"h3",text:"Pollution, humidity, and your skin barrier"},
+      {type:"h2",text:"5 best facial treatments available at AJ Salon"},
+      {type:"h3",text:"1. Gold facial for brightening"},
+      {type:"h3",text:"2. Hydrating facial for dry skin"},
+      {type:"h3",text:"3. Anti-acne facial for oily skin"},
+      {type:"h3",text:"4. Anti-aging collagen facial"},
+      {type:"h3",text:"5. De-tan facial for Indian skin tones"},
+      {type:"h2",text:"How often should you get a facial in Hyderabad?"},
+      {type:"h2",text:"What to do after your facial — aftercare tips"},
+      {type:"h2",text:"Book a facial appointment at AJ Salon Hyderabad"},
+    ]
+  },
+  color:{
+    title:"Hair coloring trends 2025 – Hyderabad salon guide",
+    kws:[["hair color Hyderabad","primary"],["hair coloring salon near me","primary"],["balayage Hyderabad","secondary"],["hair highlights 2025","secondary"]],
+    structure:[
+      {type:"h1",text:"Hair coloring trends 2025 — Hyderabad salon guide by AJ Salon"},
+      {type:"h2",text:"Top hair color trends dominating Hyderabad salons this year"},
+      {type:"h3",text:"Balayage and ombre for Indian skin tones"},
+      {type:"h3",text:"Copper, burgundy, and warm browns — trending shades"},
+      {type:"h2",text:"Choosing the right hair color for your skin tone"},
+      {type:"h3",text:"Cool vs warm undertones — a simple guide"},
+      {type:"h2",text:"Hair coloring services at AJ Salon Hyderabad"},
+      {type:"h3",text:"Global color, highlights, balayage, and toning"},
+      {type:"h2",text:"How to maintain your hair color in Hyderabad's heat"},
+      {type:"h3",text:"Shampoo, conditioning, and UV protection tips"},
+      {type:"h2",text:"Book your hair color appointment at AJ Salon"},
+    ]
+  },
+  groom:{
+    title:"Groom makeup: why every groom needs it",
+    kws:[["groom makeup Hyderabad","primary"],["men's makeup for wedding","primary"],["groom grooming Hyderabad","secondary"],["wedding groom package","secondary"]],
+    structure:[
+      {type:"h1",text:"Groom makeup in Hyderabad — why every groom needs it in 2025"},
+      {type:"h2",text:"The rise of groom makeup in Indian weddings"},
+      {type:"h3",text:"Changing norms around men's grooming in Hyderabad"},
+      {type:"h2",text:"What does groom makeup include?"},
+      {type:"h3",text:"Skin prep, foundation, concealer, and setting"},
+      {type:"h3",text:"Natural look vs polished look — what works for photos"},
+      {type:"h2",text:"AJ Salon's groom package — what to expect"},
+      {type:"h3",text:"Consultation, skin assessment, and day-of session"},
+      {type:"h2",text:"Groom grooming tips — the week before your wedding"},
+      {type:"h3",text:"Facial, haircut, beard trimming, and skincare"},
+      {type:"h2",text:"Book the AJ Salon groom package in Hyderabad"},
+    ]
+  }
+};
+
+function renderOutline(key){
+  const o=outlines[key];
+  let html=`<div class="kw-row" style="margin-bottom:10px">`;
+  o.kws.forEach(([k,t])=>{html+=`<span class="kw ${t}">${k}</span>`;});
+  html+=`</div>`;
+  o.structure.forEach(s=>{html+=`<div class="${s.type}">${s.text}</div>`;});
+  html+=`<button class="copy-btn" onclick="sendPrompt('Write a full 1,300-word SEO blog post for AJ Salon Hyderabad based on this outline: ${o.title.replace(/'/g,"")}')" style="margin-top:12px">Generate full blog post ↗</button>`;
+  document.getElementById('outline-content').innerHTML=html;
+}
+
+function showOutline(v){renderOutline(v);}
+
+function show(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+renderOutline('haircut');
+</script>
